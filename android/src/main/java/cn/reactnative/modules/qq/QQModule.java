@@ -47,6 +47,7 @@ public class QQModule extends ReactContextBaseJavaModule implements IUiListener,
     private static final String RCTQQShareDescription = "description";
     private static final String RCTQQShareWebpageUrl = "webpageUrl";
     private static final String RCTQQShareImageUrl = "imageUrl";
+    private static final String RCTQQShareLocalImageUrl = "imageLocalUrl";
 
     public QQModule(ReactApplicationContext context) {
         super(context);
@@ -121,7 +122,16 @@ public class QQModule extends ReactContextBaseJavaModule implements IUiListener,
         if (data.hasKey(RCTQQShareWebpageUrl)){
             bundle.putString(QQShare.SHARE_TO_QQ_TARGET_URL, data.getString(RCTQQShareWebpageUrl));
         }
-        if (data.hasKey(RCTQQShareImageUrl)){
+        if (data.hasKey(RCTQQShareLocalImageUrl)){
+            if (scene == 0) {
+                bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, data.getString(RCTQQShareLocalImageUrl));
+            }
+            else if (scene == 1) {
+                ArrayList<String> out = new ArrayList<>();
+                out.add(data.getString(RCTQQShareLocalImageUrl));
+                bundle.putStringArrayList(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, out);
+            }
+        } else if (data.hasKey(RCTQQShareImageUrl)){
             if (scene == 0) {
                 bundle.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, data.getString(RCTQQShareImageUrl));
             }
